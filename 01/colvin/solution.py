@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 inputs = []
-with open('input') as f:
+with open('input.txt') as f:
     for l in f.readlines():
         inputs.append(int(l.strip()))
 
