@@ -12,15 +12,11 @@ print(f'answer one: {answer_one}')
 v = 0
 answer_two = 0
 seen = {}
-found = 0
-while True:
-    if found:
-        break
+while not answer_two:
     for i in inputs:
         v += i
         if v in seen:
             answer_two = v
-            found = 1
             break
         else:
             seen[v] = 1
