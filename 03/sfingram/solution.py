@@ -1,5 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass
+from re import match
 @dataclass
 class Claim:
     id: int
@@ -14,12 +15,7 @@ class Claim:
                 yield (self.left + x, self.top + y)
 
 def read_claim(x):
-    fields = x.split(' ')
-    coords = fields[2].split(',')
-    dims = fields[3].split('x')
-    return Claim(int(fields[0].split('#')[-1]),
-                 int(coords[0]), int(coords[1][:-1]),
-                 int(dims[0]), int(dims[1]))
+    return Claim(*(int(y) for y in match(r'#(\d+) @ (\d+),(\d+): (\d+)x(\d+)', x).groups()))
 
 screen = defaultdict(set)
 claims = [read_claim(x) for x in open('input.txt')]
