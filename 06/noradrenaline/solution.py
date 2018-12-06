@@ -26,4 +26,19 @@ for i in range(len(a)):
 
 print("part 1: " + str(maxsize))
 
+# next paint the distances.
+def dist_sum(p,centers):
+    return sum([sum(abs(p-c)) for c in centers])
+
+# label space
+dspace = np.array([[dist_sum(np.array([x,y]),a) for y in range(np.amax(a,0)[1])] for x in range(np.amax(a,0)[0])])
+
+# check that I have allotted enough space
+# if any 10000s are along the edges then I need to expand the range:
+m = 10000
+if (sum(dspace[0,:]<m) or sum(dspace[-1,:]<m) or sum(dspace[:,0]<m) or sum(dspace[:,-1]<m)):
+    print("PROBLEM: you didn't allot enough space!")
+
+# assuming that's fine, let's get the size of the region of points who fit the desired sum
+print("part 2: " + str(sum(sum(dspace<m))))
 
