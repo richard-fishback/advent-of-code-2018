@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from collections import defaultdict
 from itertools import groupby
 
-DATE_FORMAT = '%Y-%m-%d %H:%M'
+DATE_FORMAT: str = '%Y-%m-%d %H:%M'
 
 
 @dataclass
@@ -16,11 +16,11 @@ class GuardShift:
     wake: bool = False
 
 
-def line_key(line):
+def line_key(line: str):
     return datetime.strptime(match(r'\[(.+)\] .+', line).groups()[0], DATE_FORMAT)
 
 
-def get_shift(entry, id=None):
+def get_shift(entry: str, id=None):
     if match(r'.+ falls asleep', entry):
         return GuardShift(id=id, date=line_key(entry), sleep=True)
     elif match(r'.+ wakes up', entry):
@@ -39,7 +39,7 @@ def get_shifts(lines):
 
 def get_max_minute(sleep_counts, id):
     if not sleep_counts[id].items():
-        return (0, 0)
+        return 0, 0
     return sorted(sleep_counts[id].items(), key=lambda x: x[-1])[-1]
 
 
